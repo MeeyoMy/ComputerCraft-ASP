@@ -1,0 +1,28 @@
+﻿@model List<StorageViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: initial;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Název počítače</th>
+            <th>Počet itemů</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(StorageViewModel s in @Model){
+        <tr>
+            <td>@s.name</td>
+            <td>@s.count</td>
+        </tr>
+        }
+    </tbody>
+</table>
