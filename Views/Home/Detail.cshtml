@@ -1,4 +1,4 @@
-﻿@model CC_ASP.Models.ItemCountClass
+﻿@model List<CC_ASP.Models.ItemCountClass>
 
 @{
     ViewData["Title"] = "Detail";
@@ -7,29 +7,24 @@
 <h1>Detail</h1>
 
 <div>
-    <h4>ItemCountClass</h4>
+    <h4>@Model[0].ComputerName</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            Computer name
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.ComputerName
-        </dd>
+        @foreach(ItemCountClass i in @Model){
         <dt class = "col-sm-2">
             Item name
         </dt>
         <dd class = "col-sm-10">
-            @Model.name
+            @i.name
         </dd>
         <dt class = "col-sm-2">
             Item count
         </dt>
         <dd class = "col-sm-10">
-            @Model.count
+            @i.count
         </dd>
+        }
     </dl>
-    }
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
