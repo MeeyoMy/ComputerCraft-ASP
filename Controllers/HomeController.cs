@@ -82,30 +82,36 @@ namespace CC_ASP.Controllers
 
             try
             {
-                ConvertWebSocketData(buffer, result);
+                ConvertWebSocketData(buffer, offset);
 
                 await webSocket.CloseOutputAsync(WebSocketCloseStatus.Empty, result.CloseStatusDescription, CancellationToken.None);
                 _logger.Log(LogLevel.Information, "WebSocket connection closed");
             }
             catch
             {
-                ConvertWebSocketData(buffer, result);
+                ConvertWebSocketData(buffer, offset);
             }
 
             storages.Sort(delegate (StorageViewModel s1, StorageViewModel s2) { return s1.count.CompareTo(s2.count) * -1; });
         }
 
-        private void ConvertWebSocketData(byte[] buffer, WebSocketReceiveResult result)
+        private void ConvertWebSocketData(byte[] buffer, int offset)
         {
-            string s = UTF8Encoding.UTF8.GetString(buffer, 0, result.Count);
-
+            string s = UTF8Encoding.UTF8.GetString(buffer, 0, offset);
             if (s != null)
             {
                 string PCname = s.Substring(0, s.IndexOf(','));
                 string jsonString = s.Substring(s.IndexOf(',') + 1);
 
-                List<ItemCountClass> list = JsonSerializer.Deserialize<List<ItemCountClass>>(jsonString)!;
+                List<Deserialised> listTemp = JsonSerializer.Deserialize<List<Deserialised>>(jsonString)!;
                 List<string> items = new List<string>();
+
+                List<ItemCountClass> list = new List<ItemCountClass>();
+
+                foreach(Deserialised d in listTemp)
+                {
+                    list.Add(new ItemCountClass() { ComputerName = PCname, name = d.name, count = d.count });
+                }
 
                 for (int i = 0; i < storages.Count; i++)
                 {
@@ -166,5 +172,10 @@ namespace CC_ASP.Controllers
                 }
             }
         }
+    }
+    class Deserialised
+    {
+        public string name { get; set; }
+        public int count { get; set; }
     }
 }
