@@ -1,0 +1,36 @@
+﻿@model CC_ASP.Models.ItemCountClass
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<div>
+    <h4>ItemCountClass</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Computer name
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.ComputerName
+        </dd>
+        <dt class = "col-sm-2">
+            Item name
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.name
+        </dd>
+        <dt class = "col-sm-2">
+            Item count
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.count
+        </dd>
+    </dl>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
