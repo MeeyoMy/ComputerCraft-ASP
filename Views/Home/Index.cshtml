@@ -3,28 +3,28 @@
     ViewData["Title"] = "Home Page";
 }
 
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: initial;
-    }
-</style>
+<div id="tableHolder">
+<partial name="_IndexPartial" model="@Model" />
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Název počítače</th>
-            <th>Počet itemů</th>
-            <th>Detail uložiště</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(StorageViewModel s in @Model){
-        <tr>
-            <td>@s.name</td>
-            <td>@s.count</td>
-            <td><a asp-controller="Home" asp-action="Detail" asp-route-ComputerName="@s.name">Details</a> </td>
-        </tr>
-        }
-    </tbody>
-</table>
+@section Scripts{
+<script>
+
+    $(function(){
+        setInterval(function () {
+            $.ajax({
+                url: "@Url.Action("Refresh")",
+                type: "Post",
+                success: function(result) {
+                    $("#tableHolder").html("");
+                    $("#tableHolder").html(result);
+                },
+                error: function(result){
+                    console.log(result);
+                }
+            });
+        }, 1000);
+    });
+
+</script>
+}

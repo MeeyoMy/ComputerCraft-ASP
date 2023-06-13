@@ -1,0 +1,21 @@
+﻿@model List<StorageViewModel>
+
+<table>
+    <thead>
+        <tr>
+            <th class="uppercase">Název počítače</th>
+            <th class="uppercase">Počet itemů</th>
+            <th class="uppercase">Detail uložiště</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (StorageViewModel s in @Model)
+        {
+            <tr>
+                <td>@s.name</td>
+                <td>@s.count</td>
+                <td><a asp-controller="Home" asp-action="Detail" asp-route-ComputerName="@s.name">Details</a> </td>
+            </tr>
+        }
+    </tbody>
+</table>

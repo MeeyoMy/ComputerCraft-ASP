@@ -22,6 +22,12 @@ namespace CC_ASP.Controllers
             return View(storages);
         }
 
+        [HttpPost]
+        public IActionResult Refresh()
+        {
+            return PartialView("_IndexPartial", storages);
+        }
+
         public IActionResult Detail(string? ComputerName)
         {
             if (ComputerName == null)
@@ -101,14 +107,17 @@ namespace CC_ASP.Controllers
             if (s != null)
             {
                 string PCname = s.Substring(0, s.IndexOf(','));
-                string jsonString = s.Substring(s.IndexOf(',') + 1);
+                string jsonStringRaw = s.Substring(s.IndexOf(',') + 1);
+                string jsonString = "";
 
-                List<Deserialised> listTemp = JsonSerializer.Deserialize<List<Deserialised>>(jsonString)!;
+                jsonString = jsonStringRaw.Replace(",null", "");
+
+                List<StorageViewModel> listTemp = JsonSerializer.Deserialize<List<StorageViewModel>>(jsonString)!;
                 List<string> items = new List<string>();
 
                 List<ItemCountClass> list = new List<ItemCountClass>();
 
-                foreach(Deserialised d in listTemp)
+                foreach(StorageViewModel d in listTemp)
                 {
                     list.Add(new ItemCountClass() { ComputerName = PCname, name = d.name, count = d.count });
                 }
@@ -172,10 +181,5 @@ namespace CC_ASP.Controllers
                 }
             }
         }
-    }
-    class Deserialised
-    {
-        public string name { get; set; }
-        public int count { get; set; }
     }
 }

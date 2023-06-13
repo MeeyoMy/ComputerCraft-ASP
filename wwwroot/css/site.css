@@ -1,3 +1,24 @@
+p.uppercase {
+    text-transform: uppercase;
+}
+
+table, th, td {
+    border-bottom: 1px solid black;
+    border-collapse: initial;
+    padding: 8px;
+    text-align: center;
+    width: 35%;
+    font-size: 35px;
+}
+
+tr:hover {
+    background-color: rgb(51, 51, 51);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
 html {
   font-size: 14px;
 }
@@ -13,6 +34,16 @@ html {
   min-height: 100%;
 }
 
+@font-face {
+    font-family: mcfont;
+    src: url("../src/Monocraft.otf");
+}
+
 body {
-  margin-bottom: 60px;
+    background-image: url("/src/pack_3530346.jpg");
+}
+
+* {
+    font-family: mcfont;
+    color: white;
 }
